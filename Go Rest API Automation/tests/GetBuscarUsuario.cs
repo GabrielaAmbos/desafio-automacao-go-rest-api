@@ -10,7 +10,7 @@ namespace Go_Rest_API_Automation.tests
         [Test]
         public void DeveBuscarUsuario()
         {
-            string endpoint = "/public-api/users/" + Hooks.GetId();
+            string endpoint = Hooks.GetUsersEndpoint() + Hooks.GetId();
 
             var json = ApiClient<User>.Request(endpoint);
 
@@ -25,7 +25,7 @@ namespace Go_Rest_API_Automation.tests
         [Test]
         public void NaoDeveBuscarUsuario()
         {
-            string endpoint = "/public-api/users/-" + Hooks.GetId();
+            string endpoint = Hooks.GetUsersEndpoint() + "-" + Hooks.GetId();
 
             var json = ApiClient<User>.Request(endpoint);
 

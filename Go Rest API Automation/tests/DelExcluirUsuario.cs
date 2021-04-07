@@ -12,7 +12,7 @@ namespace Go_Rest_API_Automation.tests
         [Test]
         public void DeveExcluirUsuarioExistente()
         {
-            string endpoint = "/public-api/users/" + Hooks.GetId();
+            string endpoint = Hooks.GetUsersEndpoint() + Hooks.GetId();
 
             var json = ApiClient<User>.Request(endpoint, Method.DELETE);
 
@@ -22,7 +22,7 @@ namespace Go_Rest_API_Automation.tests
         [Test]
         public void NaoDeveExcluirUsuarioInexistente()
         {
-            string endpoint = "/public-api/users/-" + Hooks.GetId();
+            string endpoint = Hooks.GetUsersEndpoint() + "-" + Hooks.GetId();
 
             var json = ApiClient<User>.Request(endpoint, Method.DELETE);
 

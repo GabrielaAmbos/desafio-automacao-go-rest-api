@@ -9,12 +9,12 @@ namespace Go_Rest_API_Automation.tests
 
     public class PostCriarUmUsuario
     {
-        private int id;
+        private int LastUserId;
 
         [Test]
         public void DeveCriarUmUsuario()
         {
-            string endpoint = "/public-api/users";
+            string endpoint = Hooks.GetUsersEndpoint();
 
             JObject jObjectbody = new JObject();
             jObjectbody.Add("name", "Tomas Oliver");
@@ -24,7 +24,7 @@ namespace Go_Rest_API_Automation.tests
 
             var json = ApiClient<User>.Request(endpoint, Method.POST, jObjectbody);
 
-            id = json.Data.Id;
+            LastUserId = json.Data.Id;
             json.Code.Should().Be(201);
             json.Data.Name.Should().Be("Tomas Oliver");
             json.Data.Gender.Should().Be("Male");
@@ -35,7 +35,7 @@ namespace Go_Rest_API_Automation.tests
         [TearDown]
         public void DeveExcluirUsuarioExistente()
         {
-            string endpoint = "/public-api/users/" + id;
+            string endpoint = Hooks.GetUsersEndpoint() + LastUserId;
 
             var json = ApiClient<User>.Request(endpoint, Method.DELETE);
         }

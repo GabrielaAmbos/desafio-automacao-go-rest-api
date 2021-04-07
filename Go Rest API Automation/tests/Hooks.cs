@@ -1,4 +1,5 @@
 ﻿using Go_Rest_API_Automation.client;
+using Go_Rest_API_Automation.utils.providers;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using RestSharp;
@@ -8,7 +9,7 @@ namespace Go_Rest_API_Automation.tests
     [SetUpFixture]
     public static class Hooks
     {
-        private static int id;
+        private static int LastUserId;
 
         [OneTimeSetUp]
         public static void CriarUsuario()
@@ -23,12 +24,17 @@ namespace Go_Rest_API_Automation.tests
 
             var json = ApiClient<User>.Request(endpoint, Method.POST, jObjectbody);
 
-            id = json.Data.Id;
+            LastUserId = json.Data.Id;
         }
 
-        public static int GetId()
+        public static string GetId()
         {
-            return id;
+            return "/" + LastUserId;
+        }
+
+        public static string GetUsersEndpoint()
+        {
+            return EndpointProvider.Users();
         }
 
         [OneTimeTearDown]

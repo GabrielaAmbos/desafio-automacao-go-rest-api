@@ -11,19 +11,19 @@ namespace Go_Rest_API_Automation.client
 {
     public static class ApiClient<T>
     {
-        public static T Request(string endpoint, Method method = Method.GET, JObject jObjectbody = null)
+        public static T Request(string endpoint, Method method = Method.GET, JObject jObjectBody = null)
         {
-            RestClient restClient = new RestClient(BaseUrl.UrlBase());
+            RestClient restClient = new RestClient(UrlProvider.BaseUrl());
             RestRequest restRequest = new RestRequest(endpoint, method);
 
             if(method.Equals(Method.POST) || method.Equals(Method.PUT))
             {
-                restRequest.AddParameter("application/json", jObjectbody, ParameterType.RequestBody);
+                restRequest.AddParameter("application/json", jObjectBody, ParameterType.RequestBody);
             } else
             {
                 restRequest.AddParameter("application/json", ParameterType.RequestBody);
             }
-            restRequest.AddHeader("Authorization", Token.BasicToken());
+            restRequest.AddHeader("Authorization", TokenProvider.BasicToken());
 
             IRestResponse restResponse = restClient.Execute(restRequest);
 

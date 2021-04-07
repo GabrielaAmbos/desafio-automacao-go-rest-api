@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Go_Rest_API_Automation.utils
 {
-    public static class Token
+    public static class TokenProvider
     {
         public static string BasicToken()
         {
