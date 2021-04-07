@@ -18,7 +18,7 @@ namespace Go_Rest_API_Automation.tests
             JObject jObjectbody = new JObject();
             jObjectbody.Add("name", "Leroy Borgan");
             jObjectbody.Add("gender", "Male");
-            jObjectbody.Add("email", "leroy_borgan@outlook.com");
+            jObjectbody.Add("email", "leroyborgan123@outlook.com");
             jObjectbody.Add("status", "Active");
 
             var json = ApiClient<User>.Request(endpoint, Method.POST, jObjectbody);
@@ -34,7 +34,7 @@ namespace Go_Rest_API_Automation.tests
         [OneTimeTearDown]
         public static void DeveExcluirUsuario()
         {
-            string endpoint = "/public-api/users/" + Hooks.GetId();
+            string endpoint = "/public-api/users/" + GetId();
 
             var json = ApiClient<User>.Request(endpoint, Method.DELETE);
         }

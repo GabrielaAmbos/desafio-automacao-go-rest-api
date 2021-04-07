@@ -19,7 +19,7 @@ namespace Go_Rest_API_Automation.tests
             JObject jObjectbody = new JObject();
             jObjectbody.Add("name", "Tomas Oliver");
             jObjectbody.Add("gender", "Male");
-            jObjectbody.Add("email", "tomas.oliver@outlook.com");
+            jObjectbody.Add("email", "tomasoliver@outlook.com");
             jObjectbody.Add("status", "Active");
 
             var json = ApiClient<User>.Request(endpoint, Method.POST, jObjectbody);
@@ -28,14 +28,14 @@ namespace Go_Rest_API_Automation.tests
             json.Code.Should().Be(201);
             json.Data.Name.Should().Be("Tomas Oliver");
             json.Data.Gender.Should().Be("Male");
-            json.Data.Email.Should().Be("tomas.oliver@outlook.com");
+            json.Data.Email.Should().Be("tomasoliver@outlook.com");
             json.Data.Status.Should().Be("Active");
         }
 
         [TearDown]
         public void DeveExcluirUsuarioExistente()
         {
-            string endpoint = "/public-api/users/" + Hooks.GetId();
+            string endpoint = "/public-api/users/" + id;
 
             var json = ApiClient<User>.Request(endpoint, Method.DELETE);
         }

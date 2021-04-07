@@ -17,7 +17,7 @@ namespace Go_Rest_API_Automation.tests
             json.Code.Should().Be(200);
             json.Data.Name.Should().Be("Leroy Borgan");
             json.Data.Gender.Should().Be("Male");
-            json.Data.Email.Should().Be("leroy_borgan@outlook.com");
+            json.Data.Email.Should().Be("leroyborgan123@outlook.com");
             json.Data.Status.Should().Be("Active");
 
         }
