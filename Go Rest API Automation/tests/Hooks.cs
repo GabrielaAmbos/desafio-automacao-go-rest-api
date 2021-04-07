@@ -1,7 +1,4 @@
 ﻿using Go_Rest_API_Automation.client;
-using Go_Rest_API_Automation.utils;
-using Go_Rest_API_Automation.utils.urls;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using RestSharp;
@@ -16,7 +13,7 @@ namespace Go_Rest_API_Automation.tests
         [OneTimeSetUp]
         public static void CriarUsuario()
         {
-            RestClient restClient = new RestClient(BaseUrl.UrlBase());
+            string endpoint = "/public-api/users";
 
             JObject jObjectbody = new JObject();
             jObjectbody.Add("name", "Leroy Borgan");
@@ -24,14 +21,8 @@ namespace Go_Rest_API_Automation.tests
             jObjectbody.Add("email", "leroy_borgan@outlook.com");
             jObjectbody.Add("status", "Active");
 
-            RestRequest restRequest = new RestRequest("/public-api/users", Method.POST);
+            var json = ApiClient<User>.Request(endpoint, Method.POST, jObjectbody);
 
-            restRequest.AddParameter("application/json", jObjectbody, ParameterType.RequestBody);
-            restRequest.AddHeader("Authorization", Token.BasicToken());
-
-            IRestResponse restResponse = restClient.Execute(restRequest);
-
-            var json = JsonConvert.DeserializeObject<User>(restResponse.Content);
             id = json.Data.Id;
         }
 
@@ -43,13 +34,9 @@ namespace Go_Rest_API_Automation.tests
         [OneTimeTearDown]
         public static void DeveExcluirUsuario()
         {
-            RestClient restClient = new RestClient(BaseUrl.UrlBase());
-            RestRequest restRequest = new RestRequest("/public-api/users/" + GetId(), Method.DELETE);
+            string endpoint = "/public-api/users/" + Hooks.GetId();
 
-            restRequest.AddParameter("application/json", ParameterType.RequestBody);
-            restRequest.AddHeader("Authorization", Token.BasicToken());
-
-            IRestResponse restResponse = restClient.Execute(restRequest);
+            var json = ApiClient<User>.Request(endpoint, Method.DELETE);
         }
     }
 }

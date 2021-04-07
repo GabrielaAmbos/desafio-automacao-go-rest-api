@@ -1,4 +1,6 @@
-﻿using Go_Rest_API_Automation.Models;
+﻿using FluentAssertions;
+using FluentAssertions.Primitives;
+using Go_Rest_API_Automation.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

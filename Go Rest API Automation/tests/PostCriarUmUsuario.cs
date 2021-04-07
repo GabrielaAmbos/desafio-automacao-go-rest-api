@@ -1,8 +1,5 @@
 ﻿using FluentAssertions;
 using Go_Rest_API_Automation.client;
-using Go_Rest_API_Automation.utils;
-using Go_Rest_API_Automation.utils.urls;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using RestSharp;
@@ -17,7 +14,7 @@ namespace Go_Rest_API_Automation.tests
         [Test]
         public void DeveCriarUmUsuario()
         {
-            RestClient restClient = new RestClient(BaseUrl.UrlBase());
+            string endpoint = "/public-api/users";
 
             JObject jObjectbody = new JObject();
             jObjectbody.Add("name", "Tomas Oliver");
@@ -25,14 +22,8 @@ namespace Go_Rest_API_Automation.tests
             jObjectbody.Add("email", "tomas.oliver@outlook.com");
             jObjectbody.Add("status", "Active");
 
-            RestRequest restRequest = new RestRequest("/public-api/users", Method.POST);
+            var json = ApiClient<User>.Request(endpoint, Method.POST, jObjectbody);
 
-            restRequest.AddParameter("application/json", jObjectbody, ParameterType.RequestBody);
-            restRequest.AddHeader("Authorization", Token.BasicToken());
-
-            IRestResponse restResponse = restClient.Execute(restRequest);
-
-            var json = JsonConvert.DeserializeObject<User>(restResponse.Content);
             id = json.Data.Id;
             json.Code.Should().Be(201);
             json.Data.Name.Should().Be("Tomas Oliver");
@@ -44,13 +35,9 @@ namespace Go_Rest_API_Automation.tests
         [TearDown]
         public void DeveExcluirUsuarioExistente()
         {
-            RestClient restClient = new RestClient(BaseUrl.UrlBase());
-            RestRequest restRequest = new RestRequest("/public-api/users/" + id, Method.DELETE);
+            string endpoint = "/public-api/users/" + Hooks.GetId();
 
-            restRequest.AddParameter("application/json", ParameterType.RequestBody);
-            restRequest.AddHeader("Authorization", Token.BasicToken());
-
-            IRestResponse restResponse = restClient.Execute(restRequest);
+            var json = ApiClient<User>.Request(endpoint, Method.DELETE);
         }
     }
 }

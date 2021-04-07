@@ -1,7 +1,6 @@
-﻿using Go_Rest_API_Automation.utils;
-using Go_Rest_API_Automation.utils.urls;
+﻿using FluentAssertions;
+using Go_Rest_API_Automation.client;
 using NUnit.Framework;
-using RestSharp;
 
 namespace Go_Rest_API_Automation.tests
 {
@@ -11,17 +10,12 @@ namespace Go_Rest_API_Automation.tests
         [Test]
         public void DeveBuscarTodosOsUsuarios()
         {
+            string endpoint = "/public-api/users/" + Hooks.GetId();
 
-            RestClient restClient = new RestClient(BaseUrl.UrlBase());
+            var json = ApiClient<User>.Request(endpoint);
 
-            RestRequest restRequest = new RestRequest("/public-api/users/", Method.GET);
+            json.Code.Should().Be(200);
 
-            restRequest.AddParameter("application/json", ParameterType.RequestBody);
-            restRequest.AddHeader("Authorization", Token.BasicToken());
-
-            IRestResponse restResponse = restClient.Execute(restRequest);
-
-            Assert.AreEqual(200, (int)restResponse.StatusCode);
         }
     }
 }
