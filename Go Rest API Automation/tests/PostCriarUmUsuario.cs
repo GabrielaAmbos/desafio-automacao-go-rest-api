@@ -39,12 +39,18 @@ namespace Go_Rest_API_Automation.tests
             json.Data.Gender.Should().Be("Male");
             json.Data.Email.Should().Be("leroy_borgan@outlook.com");
             json.Data.Status.Should().Be("Active");
+        }
 
-            restRequest = new RestRequest("/public-api/users/" + id, Method.DELETE);
+        [TearDown]
+        public void DeveExcluirUsuarioExistente()
+        {
+            RestClient restClient = new RestClient(BaseUrl.UrlBase());
+            RestRequest restRequest = new RestRequest("/public-api/users/" + id, Method.DELETE);
+
             restRequest.AddParameter("application/json", ParameterType.RequestBody);
             restRequest.AddHeader("Authorization", Token.BasicToken());
 
-            restResponse = restClient.Execute(restRequest);
+            IRestResponse restResponse = restClient.Execute(restRequest);
         }
     }
 }

@@ -3,7 +3,6 @@ using Go_Rest_API_Automation.utils.urls;
 using NUnit.Framework;
 using RestSharp;
 
-
 namespace Go_Rest_API_Automation.tests
 {
     public class GetListarTodosOsUsuarios

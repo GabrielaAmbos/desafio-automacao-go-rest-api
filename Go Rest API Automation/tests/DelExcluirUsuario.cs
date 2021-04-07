@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using RestSharp;
-using TechTalk.SpecFlow;
 
 namespace Go_Rest_API_Automation.tests
 {
@@ -14,15 +13,15 @@ namespace Go_Rest_API_Automation.tests
     {
         private int id;
 
-        [Before]
+        [SetUp]
         public void CriarUmUsuario()
         {
             RestClient restClient = new RestClient(BaseUrl.UrlBase());
 
             JObject jObjectbody = new JObject();
-            jObjectbody.Add("name", "Leroy Bogan");
+            jObjectbody.Add("name", "Leroy Borgan");
             jObjectbody.Add("gender", "Male");
-            jObjectbody.Add("email", "leroy_bogan@hotmail.com");
+            jObjectbody.Add("email", "leroy_borgan@outlook.com");
             jObjectbody.Add("status", "Active");
 
             RestRequest restRequest = new RestRequest("/public-api/users", Method.POST);
@@ -49,7 +48,7 @@ namespace Go_Rest_API_Automation.tests
             IRestResponse restResponse = restClient.Execute(restRequest);
 
             var json = JsonConvert.DeserializeObject<User>(restResponse.Content);
-            json.Code.Should().Be(404);
+            json.Code.Should().Be(204);
         }
 
         [Test]
@@ -65,6 +64,18 @@ namespace Go_Rest_API_Automation.tests
 
             var json = JsonConvert.DeserializeObject<User>(restResponse.Content);
             json.Code.Should().Be(404);
+        }
+
+        [TearDown]
+        public void DeveExcluirUsuario()
+        {
+            RestClient restClient = new RestClient(BaseUrl.UrlBase());
+            RestRequest restRequest = new RestRequest("/public-api/users/" + id, Method.DELETE);
+
+            restRequest.AddParameter("application/json", ParameterType.RequestBody);
+            restRequest.AddHeader("Authorization", Token.BasicToken());
+
+            IRestResponse restResponse = restClient.Execute(restRequest);
         }
     }
 }

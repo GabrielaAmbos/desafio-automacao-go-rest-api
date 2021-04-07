@@ -14,7 +14,7 @@ namespace Go_Rest_API_Automation.tests
     {
         private int id;
 
-        [Before]
+        [SetUp]
         public void CriarUmUsuario()
         {
             RestClient restClient = new RestClient(BaseUrl.UrlBase());
@@ -22,7 +22,7 @@ namespace Go_Rest_API_Automation.tests
             JObject jObjectbody = new JObject();
             jObjectbody.Add("name", "Thomas Oliver");
             jObjectbody.Add("gender", "Male");
-            jObjectbody.Add("email", "thomas.oliver@hotmail.com");
+            jObjectbody.Add("email", "thomas.oliver@outlook.com");
             jObjectbody.Add("status", "Active");
 
             RestRequest restRequest = new RestRequest("/public-api/users", Method.POST);
@@ -52,7 +52,7 @@ namespace Go_Rest_API_Automation.tests
             json.Code.Should().Be(200);
             json.Data.Name.Should().Be("Thomas Oliver");
             json.Data.Gender.Should().Be("Male");
-            json.Data.Email.Should().Be("thomas.oliver@hotmail.com");
+            json.Data.Email.Should().Be("thomas.oliver@outlook.com");
             json.Data.Status.Should().Be("Active");
 
         }
@@ -73,7 +73,7 @@ namespace Go_Rest_API_Automation.tests
             json.Code.Should().Be(404);
         }
 
-        [After]
+        [TearDown]
         public void DeveExcluirUsuarioExistente()
         {
             RestClient restClient = new RestClient(BaseUrl.UrlBase());
